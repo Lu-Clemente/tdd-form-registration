@@ -1,11 +1,56 @@
-import { Box, Button, Center, FormControl, FormLabel, Input, Stack, Text } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import {
+  Box, Button, Center, FormControl,
+  FormHelperText, FormLabel, Input,
+  Stack, Text
+} from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { validationEmail } from './helpers/validations';
 
 function App() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState({
+    status: false,
+    message: ""
+  });
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    if (!validationEmail(email)) {
+      setError({
+        status: true,
+        message: "Invalid email"
+      });
+    } else if (password !== confirmPassword) {
+      setError({
+        status: true,
+        message: "Passwords don't match"
+      });
+    }
+  }
+
+  const checkForErrors = () => {
+    if (error.status === true) {
+      if (validationEmail(email) && password === confirmPassword) {
+        setError({
+          status: false,
+          message: ""
+        })
+      } else if (validationEmail(email) && password !== confirmPassword) {
+        setError({
+          status: true,
+          message: "Passwords don't match"
+        });
+      }
+    }
+  }
+
+  useEffect(() => {
+    checkForErrors();
+  }, [email, password, confirmPassword])
 
   return (
     <Box
@@ -29,16 +74,20 @@ function App() {
           Registration
         </Text>
 
-        <FormControl isRequired >
+        <FormControl isRequired>
 
           <FormLabel htmlFor='email'>Email</FormLabel>
           <Input
             type="email"
             aria-label="input-email"
             value={email}
+            isInvalid={error.message === "Invalid email" ? true : false}
             onChange={(e: any) => setEmail(e.target.value)}
-            marginBottom={5}
           />
+
+          <FormHelperText marginBottom={5}>
+            We only use your email for validation proposes.
+          </FormHelperText>
 
           <FormLabel htmlFor='password'>Password</FormLabel>
           <Input
@@ -46,6 +95,7 @@ function App() {
             name="password"
             role="password-input"
             value={password}
+            isInvalid={error.message === "Passwords don't match" ? true : false}
             onChange={(e: any) => setPassword(e.target.value)}
             marginBottom={5}
           />
@@ -56,13 +106,28 @@ function App() {
             name="confirmPassword"
             role="confirm-password-input"
             value={confirmPassword}
+            isInvalid={error.message === "Passwords don't match" ? true : false}
             onChange={(e: any) => setConfirmPassword(e.target.value)}
             marginBottom={25}
           />
 
+          {error.status === true &&
+            <Box bgColor="blackAlpha.200" p={1} marginBottom={5} borderRadius={5}>
+              <Text
+                role="note"
+                aria-label="error-warning"
+                color="red" fontWeight="600" fontSize={15}
+              >
+                {error.message}
+              </Text>
+            </Box>
+          }
+
           <Center>
             <Button
+              disabled={(!email || !password || !confirmPassword) ? true : false}
               type="submit"
+              onClick={handleSubmit}
               aria-label="submit"
               colorScheme="green"
               cursor="pointer"
