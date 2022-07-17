@@ -3,7 +3,7 @@ import App from './App';
 
 describe("Basic application view", () => {
 
-  it('should render an empity email input', () => {
+  it('should render an empty email input', () => {
     render(<App />);
 
     const emailElement = screen.getByRole("textbox", { name: /input-email/i });
@@ -13,14 +13,14 @@ describe("Basic application view", () => {
   it('should render an empty password input', () => {
     render(<App />);
 
-    const passwordElement = screen.getByRole("textbox", { name: /input-password/i });
+    const passwordElement = screen.getByPlaceholderText(/new password/i);
     expect(passwordElement).toHaveValue("")
   })
 
   it('should render an empty confirm password input', () => {
     render(<App />);
 
-    const confirmPasswordElement = screen.getByRole("textbox", { name: /input-confirm-password/i });
+    const confirmPasswordElement = screen.getByPlaceholderText(/confirm password/i);
     expect(confirmPasswordElement).toHaveValue("")
   })
 
