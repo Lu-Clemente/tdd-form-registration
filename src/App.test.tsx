@@ -13,14 +13,14 @@ describe("Basic application view", () => {
   it('should render an empty password input', () => {
     render(<App />);
 
-    const passwordElement = screen.getByPlaceholderText(/new password/i);
+    const passwordElement = screen.getByRole("password-input");
     expect(passwordElement).toHaveValue("")
   })
 
   it('should render an empty confirm password input', () => {
     render(<App />);
 
-    const confirmPasswordElement = screen.getByPlaceholderText(/confirm password/i);
+    const confirmPasswordElement = screen.getByRole(/confirm-password-input/i);
     expect(confirmPasswordElement).toHaveValue("")
   })
 
