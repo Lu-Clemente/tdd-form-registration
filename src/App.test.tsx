@@ -10,14 +10,14 @@ describe("Basic application view", () => {
     expect(emailElement).toHaveValue("")
   })
 
-  it('should render an empity password input', () => {
+  it('should render an empty password input', () => {
     render(<App />);
 
     const passwordElement = screen.getByRole("textbox", { name: /input-password/i });
     expect(passwordElement).toHaveValue("")
   })
 
-  it('should render an empity confirm password input', () => {
+  it('should render an empty confirm password input', () => {
     render(<App />);
 
     const confirmPasswordElement = screen.getByRole("textbox", { name: /input-confirm-password/i });
