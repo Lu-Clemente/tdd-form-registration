@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import App from '../App';
 
 describe("Basic application view", () => {
@@ -29,5 +30,29 @@ describe("Basic application view", () => {
 
     const buttonElement = screen.getByRole("button", { name: /submit/i });
     expect(buttonElement).toBeInTheDocument();
+  })
+})
+
+describe("Radio Button component", () => {
+  it('should render the radio selection with "Consumer" selected as default', () => {
+    render(<App />);
+
+    const radioElement = screen.getAllByTestId("check-input");
+    expect(radioElement[0]).toHaveTextContent(/consumer/i);
+    expect(radioElement[0]).toHaveAttribute("data-checked");
+  })
+
+  it("should update radio's button from 'Consumer' to 'Staff'", () => {
+    render(<App />);
+
+    const radioElement = screen.getAllByTestId("check-input");
+    expect(radioElement[0]).toHaveTextContent(/consumer/i);
+    expect(radioElement[0]).toHaveAttribute("data-checked");
+
+    userEvent.click(radioElement[2]);
+    expect(radioElement[0]).not.toHaveAttribute("data-checked");
+    expect(radioElement[2]).toHaveTextContent(/staff/i);
+    expect(radioElement[2]).toHaveAttribute("data-checked");
+    
   })
 })
