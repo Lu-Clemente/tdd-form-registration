@@ -74,7 +74,7 @@ function App() {
     >
       <Stack
         p={15} margin="auto"
-        w={["95%", "90%", "70%", "60%"]} h="80%"
+        w={["95%", "90%", "70%", "60%"]} h={["95%", "90%"]}
         bgColor="#fff" shadow="md"
         borderRadius={5}
         justifyContent="space-around"
