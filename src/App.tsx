@@ -1,9 +1,10 @@
 import {
   Box, Button, Center, FormControl,
-  FormHelperText, FormLabel, Input,
-  Stack, Text
+  FormHelperText, FormLabel, HStack, Input,
+  Stack, Text, useRadioGroup
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
+import RadioCard from './components/Radio';
 import { validationEmail } from './helpers/validations';
 
 function App() {
@@ -11,10 +12,22 @@ function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [personType, setPersonType] = useState("Consumer")
   const [error, setError] = useState({
     status: false,
     message: ""
   });
+
+  const options = ['Consumer', 'Seller', 'Staff']
+
+  const { getRootProps, getRadioProps } = useRadioGroup({
+    name: 'person-type',
+    defaultValue: 'Consumer',
+    onChange: setPersonType,
+    value: personType,
+  });
+
+  const group = getRootProps();
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -50,7 +63,7 @@ function App() {
 
   useEffect(() => {
     checkForErrors();
-  }, [email, password, confirmPassword])
+  }, [email, password, confirmPassword]);
 
   return (
     <Box
@@ -75,6 +88,20 @@ function App() {
         </Text>
 
         <FormControl isRequired>
+
+          <FormLabel htmlFor='email'>Select your profile</FormLabel>
+          <Center>
+            <HStack {...group}>
+              {options.map((value) => {
+                const radio = getRadioProps({ value })
+                return (
+                  <RadioCard key={value} {...radio} >
+                    {value}
+                  </RadioCard>
+                )
+              })}
+            </HStack>
+          </Center>
 
           <FormLabel htmlFor='email'>Email</FormLabel>
           <Input
