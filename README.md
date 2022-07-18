@@ -34,9 +34,9 @@ This is a TDD applycation, using Jest and Testing library for unit testing and C
 ## Preview
 
 <p align="center">
- <img align="center" width="90%" src="https://github.com/Lu-Clemente/SimpleCrudApi/blob/main/preview/unit-test-capture.png">
+ <img align="center" width="90%" src="https://github.com/Lu-Clemente/tdd-jest-e2e-form-registration/blob/main/preview/unit-test-capture.png">
 </p>
 
 <p align="center">
- <img align="center" width="90%" src="https://github.com/Lu-Clemente/SimpleCrudApi/blob/main/preview/e2e-integration-capture.png">
+ <img align="center" width="90%" src="https://github.com/Lu-Clemente/tdd-jest-e2e-form-registration/blob/main/preview/e2e-integration-capture.png">
 </p>
