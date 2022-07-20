@@ -40,17 +40,25 @@ describe('User may correct his input mistakes and errors warnings should disapea
   it("should show email error to user and then password error when email is ok", () => {
     cy.visit('http://localhost:3000/');
 
+    cy.findByRole("note", { name: /error-warning/i }).should('not.exist');
     cy.findByRole("textbox", { name: /input-email/i }).type('test@gmail');
     cy.findByRole("password-input").type('12345');
     cy.findByRole(/confirm-password-input/i).type('123');
 
     cy.findByRole("button", { name: /submit/i }).click();
+    cy.findByRole("note", { name: /error-warning/i })
+      .should('be.visible')
+      .and('contain.text', "Invalid email");
 
     cy.findByRole("textbox", { name: /input-email/i }).type('.com');
+    cy.findByRole("note", { name: /error-warning/i })
+      .should('be.visible')
+      .and('contain.text', "Passwords don't match");
   })
 
   it("should not show any errors to user when passwords matches", () => {
     cy.findByRole(/confirm-password-input/i).type('45');
+    cy.findByRole("note", { name: /error-warning/i }).should('not.exist');
   })
 })
 
